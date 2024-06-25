@@ -1,0 +1,65 @@
+:root {
+	--primary-color: #009933;
+	--secondary-color: #000;
+	--background-color: #FFF;
+	--border-color: #DFDFDF;
+	--hover-color: #009933;
+}
+
+li.list-group-item.active {
+	background-color: var(--background-color);
+	border-color: var(--primary-color);
+	border-left: solid 10px var(--primary-color);
+	color: var(--secondary-color);
+}
+
+.list-group a li:hover:not(.active) {
+	color: var(--hover-color);
+}
+
+.container-body {
+	border: solid 1px var(--border-color);
+	padding: 25px;
+}
+
+h4 {
+	color: var(--primary-color);
+}
+
+#buttonAppend {
+	background-color: var(--primary-color);
+	color: var(--background-color);
+}
+
+.task-name {
+	word-break: break-all;
+	margin-bottom: 0;
+}
+
+.taskActions i {
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.taskActions i:hover {
+	transform: scale(1.5);
+}
+
+.tox-promotion,
+.tox-statusbar__branding,
+.tox-statusbar__path-item {
+	display: none !important;
+}
+
+.pagination {
+	overflow-x: auto;
+}
+
+.page-item:not(.active) .page-link:hover {
+	color: var(--primary-color);
+}
+
+.page-item.active .page-link {
+	background-color: var(--primary-color);
+	border-color: var(--border-color);
+}

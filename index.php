@@ -1,48 +1,143 @@
 <?php
-$acao = 'recuperar_pendentes';
-require('tarefa_controller.php');
-?>
 
-<html>
+require_once(__DIR__ . '/system/vendor/autoload.php');
 
-<?php include('./includes/head.php') ?>
+use Library\Log;
+use Exception;
 
-<body>
-	<?php include('./includes/navbar.php') ?>
+set_exception_handler(function (Throwable $exception) {
+    Log::write(sprintf(
+        'Exceção: %s - Arquivo: %s - Linha: %s',
+        $exception->getMessage(),
+        $exception->getFile(),
+        $exception->getLine()
+    ));
 
-	<?= $mensagem ?>
+    $_SESSION['INTERNAL_SITUATION'] = 500;
 
-	<div class="container app">
-		<div class="row">
-			<?php include('./includes/menu.php') ?>
+    header('Location: /');
+});
 
-			<div class="col-md-9">
-				<div class="container pagina">
-					<div class="row">
-						<div class="col">
-							<h4>Tarefas pendentes</h4>
-							<hr />
+set_error_handler(function ($errorLevel, $errorMessage, $errorFile, $errorLine) {
+    if (error_reporting() === 0) {
+        return false;
+    }
 
-							<?php foreach ($tarefas as $tarefa) { ?>
-								<div class="row mb-3 d-flex align-items-start tarefa">
-									<div class="col-sm-9" id="tarefa_<?= $tarefa['id'] ?>">
-										<?= $tarefa['tarefa'] ?>
-									</div>
-									<div class="col-sm-3 mt-2 d-flex justify-content-between">
-										<i title="Excluir" class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa['id'] ?>)"></i>
-										<i title="Editar" class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa['id'] ?>, '<?= $tarefa['tarefa'] ?>')"></i>
-										<i title="Marcar" class="far fa-square fa-lg text-success" onclick="marcar(<?= $tarefa['id'] ?>)"></i>
-									</div>
-								</div>
-								<hr>
-							<?php } ?>
+    switch ($errorLevel) {
+        case E_NOTICE:
+        case E_USER_NOTICE:
+            $error = 'Notice';
+            break;
+        case E_WARNING:
+        case E_USER_WARNING:
+            $error = 'Warning';
+            break;
+        case E_ERROR:
+        case E_USER_ERROR:
+            $error = 'Fatal Error';
+            break;
+        default:
+            $error = 'Unknown';
+            break;
+    }
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+    Log::write(sprintf(
+        '%s: %s - Arquivo: %s - Linha: %s',
+        $error,
+        $errorMessage,
+        $errorFile,
+        $errorLine
+    ));
 
-</html>
+    return true;
+});
+
+function loadEnvironmentVariables()
+{
+    if (!file_exists(__DIR__ . '/.env')) {
+        throw new Exception('Arquivo .env não encontrado no projeto!');
+    }
+
+    $lines = file(__DIR__ . '/.env');
+
+    foreach ($lines as $line) {
+        if (strpos($line, '#') === false) {
+            $line = trim($line);
+        } else {
+            $line = strstr(trim($line), '#', true);
+        }
+
+        if (!empty($line)) {
+            $var = explode('=', $line);
+
+            $_ENV[trim($var[0])] = trim($var[1]);
+        }
+    }
+
+    $requested = [
+        'DB_HOST',
+        'DB_NAME',
+        'DB_USER',
+        'DB_PASSWORD'
+    ];
+
+    $diff = array_diff_assoc($requested, array_keys($_ENV));
+
+    if (!empty($diff)) {
+        throw new Exception('Variáveis de ambiente não encontradas no arquivo .env!');
+    }
+}
+
+function handleRoute()
+{
+    $requestUri = $_SERVER['REQUEST_URI'];
+    $url = parse_url(trim($requestUri, '/'), PHP_URL_PATH);
+    $urlParts = explode('/', $url);
+
+    $path = [
+        'controller'    => !empty($urlParts[0]) ? strtolower($urlParts[0]) : 'task',
+        'method'        => !empty($urlParts[1]) ? strtolower($urlParts[1]) : 'new'
+    ];
+
+    // Criar o controlador de forma dinâmica
+    $formattedPath = implode('/', [
+        'App/Controller',
+        ucfirst($path['controller']) . 'Controller.php'
+    ]);
+
+    // Verificar se o controlador existe
+    if (!file_exists($formattedPath)) {
+        header('Location: /');
+    }
+
+    $request = file_get_contents("php://input");
+
+    if (empty($_POST) && !empty($request)) {
+        $_POST = json_decode($request, true);
+    }
+
+    include_once($formattedPath);
+
+    $controllerClass = implode('\\', [
+        'App\\Controller',
+        ucfirst($path['controller']) . 'Controller'
+    ]);
+
+    $controllerObject = new $controllerClass();
+
+    // Verificar se o método existe no controlador
+    if (method_exists($controllerObject, $path['method'])) {
+        // Chamar o método do controlador
+        call_user_func(array($controllerObject, $path['method']));
+    } else {
+        header('Location: /');
+    }
+}
+
+session_start();
+
+if (!isset($_SESSION['INTERNAL_SITUATION'])) {
+    loadEnvironmentVariables();
+}
+
+handleRoute();
