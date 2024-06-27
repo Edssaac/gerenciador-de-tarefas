@@ -1,10 +1,10 @@
 ## Apresentação Geral
 
-**Nome do Projeto:** Tarefeiro
+**Nome do Projeto:** Gerenciador de Tarefas
 
 **Descrição:**
 
-O Tarefeiro é um gerenciador de tarefas intuitivo e eficiente, projetado para facilitar o registro e a organização das suas atividades diárias. 
+O Gerenciador de Tarefas (Tarefeiro) é uma aplicação intuitiva e eficiente, projetada para facilitar o registro e a organização das suas atividades diárias. 
 Com uma interface simples e prática, você pode facilmente criar, editar e navegar por suas tarefas importantes. Mantenha-se produtivo e 
 organizado com o Tarefeiro, onde você pode gerenciar suas responsabilidades de forma eficaz.
 
@@ -60,7 +60,6 @@ CREATE DATABASE IF NOT EXISTS `taskmanager`;
 
 USE `taskmanager`;
 
-DROP TABLE IF EXISTS `status`;
 CREATE TABLE IF NOT EXISTS `status` (
     `id` int NOT NULL AUTO_INCREMENT,
     `status` varchar(25) NOT NULL,
@@ -69,7 +68,6 @@ CREATE TABLE IF NOT EXISTS `status` (
 
 INSERT IGNORE INTO `status` (`id`, `status`) VALUES (1, 'pending'), (2, 'done');
 
-DROP TABLE IF EXISTS `task`;
 CREATE TABLE IF NOT EXISTS `task` (
     `id` int NOT NULL AUTO_INCREMENT,
     `id_status` int NOT NULL DEFAULT 1,
