@@ -60,23 +60,13 @@ CREATE DATABASE IF NOT EXISTS `taskmanager`;
 
 USE `taskmanager`;
 
-CREATE TABLE IF NOT EXISTS `status` (
-    `id` int NOT NULL AUTO_INCREMENT,
-    `status` varchar(25) NOT NULL,
-    PRIMARY KEY (`id`)
-);
-
-INSERT IGNORE INTO `status` (`id`, `status`) VALUES (1, 'pending'), (2, 'done');
-
 CREATE TABLE IF NOT EXISTS `task` (
     `id` int NOT NULL AUTO_INCREMENT,
-    `id_status` int NOT NULL DEFAULT 1,
+    `status` ENUM('0', '1') NOT NULL DEFAULT '0',
     `task_name` VARCHAR(100) NOT NULL,
     `task_description` VARCHAR(1000),
     `date_added` datetime NOT NULL DEFAULT current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `id_status` (`id_status`),
-    CONSTRAINT `task_fk_status` FOREIGN KEY (`id_status`) REFERENCES `status` (`id`)
+    PRIMARY KEY (`id`)
 );
 ```
 

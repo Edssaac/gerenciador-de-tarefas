@@ -112,10 +112,10 @@ document.querySelectorAll('.taskActions i').forEach((element) => {
                 openModalTaskViewer(taskId);
                 break;
             case 'check':
-                updateStatus(taskId, 2);
+                updateStatus(taskId, 1);
                 break;
             case 'uncheck':
-                updateStatus(taskId, 1);
+                updateStatus(taskId, 0);
                 break;
         }
     });
@@ -228,7 +228,7 @@ const updateStatus = (taskId, status) => {
         .then((response) => {
             if (response.success) {
                 let checkbox = document.querySelector(`.taskActions[data-id="${taskId}"] i:last-child`);
-                if (status === 1) {
+                if (status === 0) {
                     checkbox.dataset.action = 'check';
                     checkbox.title = 'Marcar';
                     checkbox.classList.remove('fas', 'fa-check-square');
