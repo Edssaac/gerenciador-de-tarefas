@@ -56,9 +56,9 @@ composer install
 4. Configure o banco de dados:
 
 ```sql
-CREATE DATABASE IF NOT EXISTS `taskmanager`;
+CREATE DATABASE IF NOT EXISTS `task_manager`;
 
-USE `taskmanager`;
+USE `task_manager`;
 
 CREATE TABLE IF NOT EXISTS `task` (
     `id` int NOT NULL AUTO_INCREMENT,
@@ -94,9 +94,7 @@ Abra o terminal e execute o seguinte comando na raiz do projeto:
 Certifique-se de que o servidor PHP embutido esteja sempre em execução enquanto você estiver trabalhando na aplicação localmente. <br>
 Se desejar encerrar o servidor, basta pressionar `ctrl + C` no terminal onde o servidor está sendo executado.
 
-<br>
-
-**Contato:**
+## Contato
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/edssaac)
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:edssaac@gmail.com)
