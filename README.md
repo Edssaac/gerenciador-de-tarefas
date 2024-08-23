@@ -8,7 +8,7 @@ O Gerenciador de Tarefas (Tarefeiro) é uma aplicação intuitiva e eficiente, p
 Com uma interface simples e prática, você pode facilmente criar, editar e navegar por suas tarefas importantes. Mantenha-se produtivo e 
 organizado com o Tarefeiro, onde você pode gerenciar suas responsabilidades de forma eficaz.
 
-![demo](https://raw.githubusercontent.com/Edssaac/tarefeiro/main/public/images/demo/taskmanager.gif)
+![demo](https://raw.githubusercontent.com/Edssaac/tarefeiro/main/public/images/demo/task_manager.gif)
 
 **Objetivo:**
 
