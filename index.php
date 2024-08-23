@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/system/vendor/autoload.php');
 
 use Library\Log;
+use Exception;
 
 set_exception_handler(function (Throwable $exception) {
     Log::write(sprintf(
