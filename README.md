@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `task` (
     `status` ENUM('0', '1') NOT NULL DEFAULT '0',
     `task_name` VARCHAR(100) NOT NULL,
     `task_description` VARCHAR(1000),
-    `date_added` datetime NOT NULL DEFAULT current_timestamp(),
+    `date_added` DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (`id`)
 );
 ```
