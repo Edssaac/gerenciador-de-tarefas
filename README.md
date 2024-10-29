@@ -40,12 +40,12 @@ Se você é um desenvolvedor interessado em contribuir ou entender melhor o func
 **Instruções de Instalação:**
 1. Clone o repositório do projeto:
 ```
-git clone https://github.com/edssaac/tarefeiro
+git clone https://github.com/edssaac/gerenciador-de-tarefas
 ```
 
 2. Navegue até o diretório do projeto:
 ```
-cd tarefeiro
+cd gerenciador-de-tarefas
 ```
 
 3. Configure o Composer:
