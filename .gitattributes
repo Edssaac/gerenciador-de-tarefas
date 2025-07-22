@@ -1,2 +1,3 @@
-*.js linguist-detectable=false
-*.css linguist-detectable=false
+*.min.js linguist-detectable=false
+*.min.css linguist-detectable=false
+public/js/tinymce/** linguist-detectable=false
