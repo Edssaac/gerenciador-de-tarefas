@@ -1,5 +1,5 @@
 {
-    "name": "edssaac/task_manager",
+    "name": "edssaac/task-manager",
     "description": "Gerenciador de tarefas",
     "type": "project",
     "license": "MIT",
@@ -19,6 +19,8 @@
         }
     },
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.4",
+        "vlucas/phpdotenv": "^5.6",
+        "robmorgan/phinx": "^0.16.9"
     }
 }

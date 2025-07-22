@@ -102,7 +102,7 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_id']) && !empty($_POST['status'])) {
+        if (!empty($_POST['task_id']) && isset($_POST['status'])) {
             $task = new TaskModel();
 
             $json['success'] = $task->updateStatus($_POST['task_id'], $_POST['status']);

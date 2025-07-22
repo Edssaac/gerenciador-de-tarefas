@@ -86,7 +86,7 @@ class TaskModel extends Model
     {
         $this->query(
             "UPDATE task 
-                SET id_status = :status 
+                SET `status` = :status 
                 WHERE id = :task_id
             ",
             $this->mapToBind([
