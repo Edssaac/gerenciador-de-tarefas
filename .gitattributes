@@ -1,3 +1,2 @@
-*.min.js linguist-detectable=false
-*.min.css linguist-detectable=false
-public/js/tinymce/** linguist-detectable=false
+*bootstrap* linguist-vendored
+**/tinymce/** linguist-vendored
