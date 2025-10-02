@@ -73,9 +73,9 @@ class TaskModel extends Model
                 WHERE id = :task_id
             ",
             $this->mapToBind([
-                "task_id" => $task['task_id'],
-                "task_name" => $task['task_name'],
-                "task_description" => $task['task_description']
+                "task_id" => $task["task_id"],
+                "task_name" => $task["task_name"],
+                "task_description" => $task["task_description"]
             ])
         );
 

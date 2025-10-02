@@ -12,19 +12,19 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->data['title'] = 'Tarefeiro';
+        $this->data["title"] = "Tarefeiro";
     }
 
     public function new(): void
     {
-        $this->data['content'] = 'Task/New';
+        $this->data["content"] = "Task/New";
 
-        if (isset($_SESSION['INTERNAL_SITUATION']) && $_SESSION['INTERNAL_SITUATION'] === 500) {
-            $this->data['message'] = 'Não foi possível acessar o recurso no momento. 
+        if (isset($_SESSION["INTERNAL_SITUATION"]) && $_SESSION["INTERNAL_SITUATION"] === 500) {
+            $this->data["message"] = "Não foi possível acessar o recurso no momento. 
                 Tente novamente e se o erro persistir entre em contato com o suporte.
-            ';
+            ";
 
-            $this->data['message_type'] = 'danger';
+            $this->data["message_type"] = "danger";
         }
 
         session_destroy();
@@ -34,22 +34,22 @@ class TaskController extends Controller
 
     public function tasks(): void
     {
-        $this->data['content'] = 'Task/Tasks';
+        $this->data["content"] = "Task/Tasks";
 
         $limit = 10;
 
-        if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-            $offset = $limit * ($_GET['page'] - 1);
-            $this->data['page'] = $_GET['page'];
+        if (isset($_GET["page"]) && is_numeric($_GET["page"])) {
+            $offset = $limit * ($_GET["page"] - 1);
+            $this->data["page"] = $_GET["page"];
         } else {
             $offset = 0;
-            $this->data['page'] = 1;
+            $this->data["page"] = 1;
         }
 
         $task = new TaskModel();
 
-        $this->data['tasks'] = $task->getTasks($limit, $offset);
-        $this->data['total_tasks'] = ceil($task->getTotalTasks() / $limit);
+        $this->data["tasks"] = $task->getTasks($limit, $offset);
+        $this->data["total_tasks"] = ceil($task->getTotalTasks() / $limit);
 
         $this->render($this->data);
     }
@@ -58,15 +58,15 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_name'])) {
+        if (!empty($_POST["task_name"])) {
             $task = new TaskModel();
 
-            $json['success'] = $task->insert($_POST);
+            $json["success"] = $task->insert($_POST);
         } else {
-            $json['message'] = 'Nome tem que ser preenchido.';
+            $json["message"] = "Nome tem que ser preenchido.";
         }
 
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         echo json_encode($json);
     }
 
@@ -74,13 +74,13 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_id'])) {
+        if (!empty($_POST["task_id"])) {
             $task = new TaskModel();
 
-            $json['success'] = $task->getTask($_POST['task_id']);
+            $json["success"] = $task->getTask($_POST["task_id"]);
         }
 
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         echo json_encode($json);
     }
 
@@ -88,13 +88,13 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_id']) && !empty($_POST['task_name'])) {
+        if (!empty($_POST["task_id"]) && !empty($_POST["task_name"])) {
             $task = new TaskModel();
 
-            $json['success'] = $task->update($_POST);
+            $json["success"] = $task->update($_POST);
         }
 
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         echo json_encode($json);
     }
 
@@ -102,13 +102,13 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_id']) && isset($_POST['status'])) {
+        if (!empty($_POST["task_id"]) && isset($_POST["status"])) {
             $task = new TaskModel();
 
-            $json['success'] = $task->updateStatus($_POST['task_id'], $_POST['status']);
+            $json["success"] = $task->updateStatus($_POST["task_id"], $_POST["status"]);
         }
 
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         echo json_encode($json);
     }
 
@@ -116,13 +116,13 @@ class TaskController extends Controller
     {
         $json = [];
 
-        if (!empty($_POST['task_id'])) {
+        if (!empty($_POST["task_id"])) {
             $task = new TaskModel();
 
-            $json['success'] = $task->remove($_POST['task_id']);
+            $json["success"] = $task->remove($_POST["task_id"]);
         }
 
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         echo json_encode($json);
     }
 }
